@@ -1,11 +1,9 @@
-ARG BUILD_FROM
-FROM ${BUILD_FROM}
+FROM debian:bookworm-slim
 
-ENV LANG C.UTF-8
+RUN apt update && \
+    apt install -y dante-server && \
+    apt clean
 
-RUN apk add --no-cache dante-server bash shadow jq
+COPY sockd.conf /etc/sockd.conf
 
-COPY run.sh /run.sh
-RUN chmod a+x /run.sh
-
-CMD ["/run.sh"]
+CMD ["danted", "-f", "/etc/danted.conf", "-N"]
