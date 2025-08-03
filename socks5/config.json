@@ -1,6 +1,6 @@
 {
   "name": "SOCKS5 Proxy (Dante)",
-  "version": "1.0.4",
+  "version": "1.0.2",
   "slug": "socks5",
   "description": "Dante SOCKS5 server with user authentication. Ensure the configured port is not in use.",
   "arch": ["aarch64", "armv7", "amd64"],
@@ -9,6 +9,7 @@
   "host_network": true,
   "options": {
     "port": 1080,
+    "interface": "eth0",
     "users": [
       {
         "username": "proxyuser",
@@ -18,6 +19,7 @@
   },
   "schema": {
     "port": "int",
+    "interface": "str",
     "users": [
       {
         "username": "str",
