@@ -1,20 +1,12 @@
 {
-  "name": "SOCKS5 Proxy (Dante)",
-  "version": "1.0",
-  "slug": "socks5_proxy",
-  "description": "Simple SOCKS5 Proxy using Dante",
+  "name": "Dante SOCKS5 Proxy",
+  "version": "1.0.0",
+  "slug": "socks5",
+  "description": "SOCKS5 proxy using Dante",
+  "arch": ["aarch64"],
   "startup": "services",
   "boot": "auto",
-  "init": false,
-  "options": {
-    "users": []
-  },
-  "schema": {
-    "users": [
-      {
-        "username": "str",
-        "password": "str"
-      }
-    ]
-  }
+  "options": {},
+  "schema": {},
+  "build": true
 }
