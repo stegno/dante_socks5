@@ -6,4 +6,4 @@ RUN apt update && \
 
 COPY danted.conf /etc/danted.conf
 
-CMD ["danted", "-f", "/etc/danted.conf", "-N"]
+CMD ["danted", "-f", "/etc/danted.conf"]
