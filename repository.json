@@ -1,8 +1,4 @@
 {
-  "name": "Dante SOCKS5 Add-ons",
-  "url": "https://github.com/stegno/dante_socks5",
-  "maintainer": "Stegno",
-  "addons": [
-    "socks5"
-  ]
+  "name": "Dante Socks5 Addon",
+  "url": "https://github.com/stegno/dante_socks5"
 }
