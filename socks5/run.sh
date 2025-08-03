@@ -52,4 +52,4 @@ socks pass {
 EOF
 
 # Start Dante in foreground
-exec danted -f ${DANTED_CONF}
+exec /usr/sbin/danted -f ${DANTED_CONF}
