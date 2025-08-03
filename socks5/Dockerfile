@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:bookworm-slim
 
 RUN apt update && \
     apt install -y dante-server && \
@@ -6,4 +6,4 @@ RUN apt update && \
 
 COPY sockd.conf /etc/sockd.conf
 
-CMD ["/usr/sbin/danted", "-f", "/etc/danted.conf"]
+CMD ["danted", "-f", "/etc/danted.conf", "-N"]
