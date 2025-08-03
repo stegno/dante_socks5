@@ -51,5 +51,16 @@ socks pass {
 }
 EOF
 
-# Start Dante in foreground
+# Ensure service directory exists
+mkdir -p /etc/services.d/danted
+
+# Create s6-overlay service script
+cat << EOF > /etc/services.d/danted/run
+#!/usr/bin/with-contenv bashio
 exec /usr/sbin/danted -f ${DANTED_CONF}
+EOF
+
+chmod +x /etc/services.d/danted/run
+
+# Exit cleanly to let s6-overlay manage services
+exit 0
