@@ -1,7 +1,7 @@
 {
   "name": "SOCKS5 Proxy (Dante)",
   "version": "1.0.0",
-  "slug": "socks5_proxy",
+  "slug": "socks5",
   "description": "Dante SOCKS5‑server add‑on",
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "startup": "auto",
