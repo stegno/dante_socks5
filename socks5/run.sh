@@ -8,6 +8,13 @@ DANTED_CONF=/etc/danted.conf
 PORT=$(bashio::config 'port')
 USERS=$(bashio::config 'users')
 
+# Validate users array
+if [ -z "${USERS}" ] || [ "${USERS}" = "[]" ]; then
+    bashio::log.error "No users defined in configuration!"
+    exit 1
+fi
+
+# Create users
 for row in $(echo "${USERS}" | jq -r '.[] | @base64'); do
     _jq() {
         echo "${row}" | base64 --decode | jq -r "${1}"
@@ -22,8 +29,9 @@ for row in $(echo "${USERS}" | jq -r '.[] | @base64'); do
     echo "${USERNAME}:${PASSWORD}" | chpasswd
 done
 
+# Generate Dante configuration
 cat << EOF > ${DANTED_CONF}
-logoutput: stderr
+logoutput: /dev/stdout
 internal: 0.0.0.0 port = ${PORT}
 external: eth0
 
@@ -43,4 +51,5 @@ socks pass {
 }
 EOF
 
-exec danted -f ${DANTED_CONF} -D
+# Start Dante in foreground
+exec danted -f ${DANTED_CONF}
