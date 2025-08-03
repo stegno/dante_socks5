@@ -8,7 +8,6 @@ DANTED_CONF=/etc/danted.conf
 PORT=$(bashio::config 'port')
 USERS=$(bashio::config 'users')
 
-# Создаем системных пользователей из options
 for row in $(echo "${USERS}" | jq -r '.[] | @base64'); do
     _jq() {
         echo "${row}" | base64 --decode | jq -r "${1}"
@@ -23,7 +22,6 @@ for row in $(echo "${USERS}" | jq -r '.[] | @base64'); do
     echo "${USERNAME}:${PASSWORD}" | chpasswd
 done
 
-# Генерируем danted.conf с подстановкой порта
 cat << EOF > ${DANTED_CONF}
 logoutput: stderr
 internal: 0.0.0.0 port = ${PORT}
