@@ -1,12 +1,17 @@
 {
-  "name": "Dante SOCKS5 Proxy",
+  "name": "SOCKS5 Proxy (Dante)",
   "version": "1.0.0",
   "slug": "socks5",
-  "description": "SOCKS5 proxy using Dante",
-  "arch": ["aarch64"],
+  "description": "Dante SOCKS5‑server add‑on",
+  "arch": ["aarch64", "armv7", "amd64"],
   "startup": "services",
   "boot": "auto",
-  "options": {},
-  "schema": {},
+  "host_network": true,
+  "options": {
+    "port": 1080
+  },
+  "schema": {
+    "port": "int"
+  },
   "build": true
 }
