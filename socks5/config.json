@@ -8,10 +8,22 @@
   "boot": "auto",
   "host_network": true,
   "options": {
-    "port": 1080
+    "port": 1080,
+    "users": [
+      {
+        "username": "proxyuser",
+        "password": "strongpassword"
+      }
+    ]
   },
   "schema": {
-    "port": "int"
+    "port": "int",
+    "users": [
+      {
+        "username": "str",
+        "password": "str"
+      }
+    ]
   },
   "build": true
 }
