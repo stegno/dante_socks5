@@ -3,10 +3,9 @@ FROM ${BUILD_FROM}
 
 ENV LANG C.UTF-8
 
-RUN apk add --no-cache dante-server bash shadow
+RUN apk add --no-cache dante-server bash shadow jq
 
 COPY run.sh /run.sh
-COPY danted.conf /danted.conf
 
 RUN chmod a+x /run.sh
 
