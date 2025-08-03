@@ -6,4 +6,4 @@ RUN apt update && \
 
 COPY sockd.conf /etc/sockd.conf
 
-CMD ["sockd", "-f", "/etc/sockd.conf", "-N"]
+CMD ["danted", "-f", "/etc/sockd.conf", "-N"]
