@@ -2,4 +2,7 @@
   "name": "Dante Socks5 Server Addon for Home Assistant",
   "url": "https://github.com/stegno/dante_socks5",
   "maintainer": "Stegno <s.stegno@gmail.com>"
+  "addons": [
+    "socks5"
+  ]
 }
