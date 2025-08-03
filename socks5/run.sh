@@ -1,18 +1,12 @@
-#!/bin/bash
+ARG BUILD_FROM
+FROM ${BUILD_FROM}
 
-set -e
+ENV LANG C.UTF-8
 
-# Создание пользователей
-for user in $(jq -c '.users[]' /data/options.json); do
-    USERNAME=$(echo "$user" | jq -r '.username')
-    PASSWORD=$(echo "$user" | jq -r '.password')
-    
-    if ! id "$USERNAME" &>/dev/null; then
-        useradd -M -s /sbin/nologin "$USERNAME"
-    fi
+# Устанавливаем необходимые пакеты
+RUN apk add --no-cache dante-server bash shadow jq
 
-    echo "$USERNAME:$PASSWORD" | chpasswd
-done
+COPY run.sh /run.sh
+RUN chmod a+x /run.sh
 
-# Запуск Dante с конфигом
-danted -f /danted.conf -D
+CMD [ "/run.sh" ]
