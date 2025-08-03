@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "slug": "socks5",
   "description": "Dante SOCKS5‑server add‑on",
-  "arch": ["aarch64", "arm64", "amd64", "armv7", "armhf"],
-  "startup": "auto",
+  "arch": ["aarch64", "armv7", "amd64"],
+  "startup": "services",
   "boot": "auto",
   "host_network": true,
   "options": {
@@ -12,5 +12,6 @@
   },
   "schema": {
     "port": "int"
-  }
+  },
+  "build": true
 }
