@@ -12,7 +12,7 @@
     "users": [
       {
         "username": "proxyuser",
-        "password": "strongpassword"
+        "password": "proxypass"
       }
     ]
   },
@@ -24,6 +24,5 @@
         "password": "str"
       }
     ]
-  },
-  "build": true
+  }
 }
