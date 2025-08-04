@@ -1,9 +1,8 @@
-FROM debian:bookworm-slim
+FROM alpine:3.18
 
-RUN apt update && \
-    apt install -y dante-server && \
-    apt clean
+RUN apk add --no-cache dante-server bash
 
-COPY danted.conf /etc/danted.conf
+COPY run.sh /run.sh
+RUN chmod +x /run.sh
 
-CMD ["danted", "-f", "/etc/danted.conf"]
+CMD [ "/run.sh" ]
