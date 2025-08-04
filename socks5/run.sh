@@ -1,30 +1,12 @@
-#!/bin/bash
+ARG BUILD_FROM
+FROM ${BUILD_FROM}
 
-CONFIG_FILE="/etc/danted.conf"
+ENV LANG C.UTF-8
 
-# Генерация конфигурации danted.conf
-echo "logoutput: stderr" > "$CONFIG_FILE"
-echo "internal: 0.0.0.0 port=${PORT}" >> "$CONFIG_FILE"
-echo "external: eth0" >> "$CONFIG_FILE"
-echo "method: username" >> "$CONFIG_FILE"
-echo "user.privileged: root" >> "$CONFIG_FILE"
-echo "user.notprivileged: nobody" >> "$CONFIG_FILE"
-echo "client pass {
-    from: 0.0.0.0/0 to: 0.0.0.0/0
-    log: connect disconnect error
-}" >> "$CONFIG_FILE"
-echo "socks pass {
-    from: 0.0.0.0/0 to: 0.0.0.0/0
-    log: connect disconnect error
-}" >> "$CONFIG_FILE"
+# Устанавливаем необходимые пакеты
+RUN apk add --no-cache dante-server bash shadow jq
 
-# Создание пользователей
-for user in $(jq -c '.users[]' /data/options.json); do
-    username=$(echo "$user" | jq -r '.username')
-    password=$(echo "$user" | jq -r '.password')
-    adduser -D "$username"
-    echo "${username}:${password}" | chpasswd
-done
+COPY run.sh /run.sh
+RUN chmod a+x /run.sh
 
-# Запуск сервера
-exec danted -f "$CONFIG_FILE" -D
+CMD [ "/run.sh" ]
