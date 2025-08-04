@@ -1,8 +1,12 @@
-FROM alpine:3.18
+ARG BUILD_FROM
+FROM ${BUILD_FROM}
 
-RUN apk add --no-cache dante-server bash
+ENV LANG C.UTF-8
+
+# Устанавливаем необходимые пакеты
+RUN apk add --no-cache dante-server bash shadow jq
 
 COPY run.sh /run.sh
-RUN chmod +x /run.sh
+RUN chmod a+x /run.sh
 
 CMD [ "/run.sh" ]
