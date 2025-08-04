@@ -1,12 +1,48 @@
-ARG BUILD_FROM
-FROM ${BUILD_FROM}
+#!/usr/bin/with-contenv bashio
 
-ENV LANG C.UTF-8
+set -e
 
-# Устанавливаем необходимые пакеты
-RUN apk add --no-cache dante-server bash shadow jq
+CONFIG_PATH=/data/options.json
+DANTED_CONF=/etc/danted.conf
 
-COPY run.sh /run.sh
-RUN chmod a+x /run.sh
+PORT=$(bashio::config 'port')
+USERS=$(bashio::config 'users')
 
-CMD [ "/run.sh" ]
+# Создаем системных пользователей из options
+for row in $(echo "${USERS}" | jq -r '.[] | @base64'); do
+    _jq() {
+        echo "${row}" | base64 --decode | jq -r "${1}"
+    }
+    USERNAME=$(_jq '.username')
+    PASSWORD=$(_jq '.password')
+
+    if ! id "${USERNAME}" > /dev/null 2>&1; then
+        useradd -M -s /usr/sbin/nologin "${USERNAME}"
+    fi
+
+    echo "${USERNAME}:${PASSWORD}" | chpasswd
+done
+
+# Генерируем danted.conf с подстановкой порта
+cat << EOF > ${DANTED_CONF}
+logoutput: stderr
+internal: 0.0.0.0 port = ${PORT}
+external: eth0
+
+method: username none
+user.notprivileged: nobody
+
+client pass {
+    from: 0.0.0.0/0 to: 0.0.0.0/0
+    log: connect disconnect error
+}
+
+socks pass {
+    from: 0.0.0.0/0 to: 0.0.0.0/0
+    command: connect bind udpassociate
+    log: connect disconnect error
+    method: username
+}
+EOF
+
+exec danted -f ${DANTED_CONF} -D
